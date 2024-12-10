@@ -19,7 +19,7 @@ export default function BikeList({ setDetailsBikeId }) {
         <BikeCard
           bike={bike}
           setDetailsBikeId={setDetailsBikeId}
-          key={`bike-${bike.id}`}
+          key={bike.id}
         ></BikeCard>
       ))}
     </>
