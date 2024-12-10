@@ -32,3 +32,9 @@ export const completeWorkOrderAPI = (workOrderId) => {
     },
   });
 };
+
+export const deleteWorkOrderAPI = (workOrderId) => {
+  return fetch(`/api/workorder/${workOrderId}`, {
+    method: "DELETE",
+  });
+};

@@ -4,6 +4,7 @@ import {
   getIncompleteWorkOrders,
   updateWorkOrder,
   completeWorkOrderAPI,
+  deleteWorkOrderAPI,
 } from "../../managers/workOrderManager";
 import { Link } from "react-router-dom";
 import { getUserProfiles } from "../../managers/userProfileManager";
@@ -11,6 +12,12 @@ import { Button, Input } from "reactstrap";
 export default function WorkOrderList({ loggedInUser }) {
   const [workOrders, setWorkOrders] = useState([]);
   const [mechanics, setMechanics] = useState([]);
+
+  const deleteWorkOrder = (workOrderId) => {
+    deleteWorkOrderAPI(workOrderId).then(() => {
+      getIncompleteWorkOrders().then(setWorkOrders);
+    });
+  };
 
   const assignMechanic = (workOrder, mechanicId) => {
     const clone = structuredClone(workOrder);
@@ -79,12 +86,21 @@ export default function WorkOrderList({ loggedInUser }) {
               </td>
               <td>
                 {wo.userProfile && (
-                  <Button
-                    onClick={() => completeWorkOrder(wo.id)}
-                    color="success"
-                  >
-                    Mark as Complete
-                  </Button>
+                  <>
+                    <Button
+                      onClick={() => completeWorkOrder(wo.id)}
+                      color="success"
+                    >
+                      Mark as Complete
+                    </Button>
+                    <Button
+                      onClick={() => deleteWorkOrder(wo.id)}
+                      color="danger"
+                      style={{ marginLeft: "5px" }}
+                    >
+                      Delete
+                    </Button>
+                  </>
                 )}
               </td>
             </tr>
